@@ -92,7 +92,7 @@ public class ProdutosDAO {
         JPAUtil.closeEntityManager();
     }
 }
-   public void marcarComoVendido(int id) {
+   public void venderProduto(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             Produtos p = em.find(Produtos.class, id);
@@ -109,5 +109,16 @@ public class ProdutosDAO {
             JPAUtil.closeEntityManager();
         }
     }
+   public List<Produtos> listarProdutosVendidos() {
+    EntityManager em = JPAUtil.getEntityManager();
+    try {
+        String jpql = "SELECT p FROM Produtos p WHERE p.status = 'Vendido'";
+        Query query = em.createQuery(jpql, Produtos.class);
+        return query.getResultList();
+    } finally {
+        JPAUtil.closeEntityManager();
+    }
+}
+
    
 }
