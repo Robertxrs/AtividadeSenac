@@ -92,7 +92,7 @@ public class ProdutosDAO {
         JPAUtil.closeEntityManager();
     }
 }
-   public void marcarComoVendido(int id) {
+   public void venderProduto(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             Produtos p = em.find(Produtos.class, id);

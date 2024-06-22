@@ -6,8 +6,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
- 
 public class listagemVIEW extends javax.swing.JFrame {
 
     /**
@@ -19,8 +17,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         List<Produtos> listaProdutos = produtosDAO.listar(-1, "", null, "");
         preencheTabela(listaProdutos);
     }
-  
-    
+
     public void preencheTabela(List<Produtos> produtos) {
         String[] columns = {"Id", "Nome", "Valor", "Status"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
@@ -34,9 +31,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
         listaProdutos.setModel(model);
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,7 +131,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-       
+        venderSelecionado();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -147,22 +142,34 @@ public class listagemVIEW extends javax.swing.JFrame {
         excluirSelecionado();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-        private void excluirSelecionado() {
+    private void excluirSelecionado() {
         int rowIndex = listaProdutos.getSelectedRow();
 
         if (rowIndex != -1) {
             int id = Integer.parseInt(listaProdutos.getValueAt(rowIndex, 0).toString());
             ProdutosDAO produtosDAO = new ProdutosDAO();
             produtosDAO.excluir(id);
-            List<Produtos> Lista = produtosDAO.listar(-1, "", null,"");
+            List<Produtos> Lista = produtosDAO.listar(-1, "", null, "");
             preencheTabela(Lista);
         } else {
             JOptionPane.showMessageDialog(this, "Nenhum Produto selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
 
-     
-    
+    private void venderSelecionado() {
+        int rowIndex = listaProdutos.getSelectedRow();
+
+        if (rowIndex != -1) {
+            int id = Integer.parseInt(listaProdutos.getValueAt(rowIndex, 0).toString());
+            ProdutosDAO produtosDAO = new ProdutosDAO();
+            produtosDAO.venderProduto(id);
+            List<Produtos> lista = produtosDAO.listar(-1, "", null, "");
+            preencheTabela(lista);
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhum Produto selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -208,7 +215,5 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
-
-   
 
 }
